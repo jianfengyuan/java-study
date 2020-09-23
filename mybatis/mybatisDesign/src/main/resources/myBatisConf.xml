@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>      <!-- 对应图中的SqlMapConfig.xml -->
+<!-- Mybatis的主配置文件 -->
+<configuration>
+    <!-- 配置properties，来引入连接数据库所需要的对象，即图中的jdbcConfig.properties -->
+    <properties resource="jdbcConf.properties">  <!-- 配置信息与使用JDBC连接数据库所需要信息相同 -->
+        <!-- resource用于指定配置文件的信息，按照类路径的写法来写，并且必须存在于类路径下 -->
+    </properties>
+
+    <!-- 配置环境 -->
+    <environments default="mysql">
+        <!-- 配置mysql环境 -->
+        <environment id="mysql">
+            <!-- 配置事务的类型 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源(连接池) -->
+            <dataSource type="POOLED">
+                <!-- 配置连接数据库的四个基本信息 -->
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 指定映射配置文件的位置(映射配置文件指的是每个dao独立的配置文件) -->
+    <mappers>
+        <mapper resource="dao/IUserDao.xml"/>   <!-- 注意这里的文件结构最好和dao层结构相同 -->
+    </mappers>
+</configuration>

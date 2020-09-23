@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="dao.IUserDao">
+    <!--Select的返回结果封装到 domain.User 对象中-->
+    <select id="findAll" resultType="domain.User">
+        select * from user;
+    </select>
+</mapper>
