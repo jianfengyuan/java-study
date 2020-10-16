@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: my_batis
@@ -17,6 +18,34 @@ public class User implements Serializable {
     private String address;
     private String sex;
 
+    /*
+     * 一個用戶可以有多個角色
+     * 建立多對多關係映射
+     * */
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+    /*
+     * 一個用戶可以有多個賬戶,
+     * 一對多關係映射: 主表實體應該包含從表實體的集合引用
+     **/
+
+    private List<Account> accounts;
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -25,8 +54,20 @@ public class User implements Serializable {
                 ", birthday=" + birthday +
                 ", address='" + address + '\'' +
                 ", sex='" + sex + '\'' +
+                ", roles=" + roles +
                 '}';
     }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", username='" + username + '\'' +
+//                ", birthday=" + birthday +
+//                ", address='" + address + '\'' +
+//                ", sex='" + sex + '\'' +
+//                ", accounts=" + accounts +
+//                '}';
+//    }
 
     public Integer getId() {
         return id;

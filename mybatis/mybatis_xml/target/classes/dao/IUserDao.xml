@@ -3,8 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.IUserDao">
+    <resultMap id="userAccountMap" type="domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <collection property="accounts" ofType="domain.Account">
+            <id property="id" column="aid"></id>
+            <result property="uid" column="uid"></result>
+            <result property="money" column="money"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="userRoleMap" type="domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <collection property="roles" ofType="domain.Role">
+            <id property="roleId" column="rid"></id>
+            <result property="roleName" column="role_name"></result>
+            <result property="roleDesc" column="role_desc"></result>
+        </collection>
+    </resultMap>
     <!--Select的返回结果封装到 domain.User 对象中-->
     <select id="findAll" resultType="domain.User">
         select * from user;
+    </select>
+    <select id="findUserAccount" resultMap="userAccountMap">
+        select u.*, a.id as aid, a.uid, a.money from user u left outer join account a on u.id = a.uid
+    </select>
+    <select id="findUserRole" resultMap="userRoleMap">
+        select u.*, r.id as rid, r.role_name, r.role_desc from user u
+        left join user_role ur on u.id =ur.uid
+        left join role r on r.id = ur.rid
     </select>
 </mapper>

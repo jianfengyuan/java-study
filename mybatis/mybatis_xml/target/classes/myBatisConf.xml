@@ -18,16 +18,17 @@
             <!-- 配置数据源(连接池) -->
             <dataSource type="POOLED">
                 <!-- 配置连接数据库的四个基本信息 -->
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${url}"/>
-                <property name="username" value="${username}"/>
-                <property name="password" value="${password}"/>
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
     </environments>
 
     <!-- 指定映射配置文件的位置(映射配置文件指的是每个dao独立的配置文件) -->
     <mappers>
-        <mapper resource="dao/IUserDao.xml"/>   <!-- 注意这里的文件结构最好和dao层结构相同 -->
+        <package name="dao"/>
+<!--        <mapper resource="dao/IUserDao.xml"/>   &lt;!&ndash; 注意这里的文件结构最好和dao层结构相同 &ndash;&gt;-->
     </mappers>
 </configuration>
