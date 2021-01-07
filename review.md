@@ -428,6 +428,9 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 
 ![img](https://user-gold-cdn.xitu.io/2018/12/11/1679c3c51136aeb9?imageslim)
 
+> 1. 当请求到达springmvc前段控制器的时候, 会到达DispatcherServlet的doService()方法
+> 2. 然后调用doDispatcher()方法
+
 >SpringMVC各個模块的作用
 >
 >使用SpringMVC时，所有的请求都是最先经过DispatcherServlet的，然后由DispatcherServlet选择合适的HandlerMapping和HandlerAdapter来处理请求，==HandlerMapping的作用就是找到请求所对应的方法==，而==HandlerAdapter则来处理和请求相关的的各种事情==。
