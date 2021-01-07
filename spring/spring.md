@@ -157,3 +157,25 @@
 **/
 ```
 
+
+
+### 在Junit單元測試中 整合spring組件
+
+​	在執行測試方法時, Junit不知道是否有spring框架, 所以不會讀取配置文件/配置類
+​	在測試方法執行時, 沒有IOC容器
+
+​	解決辦法:
+
+  1. 導入spring整合Junit的jar
+
+  2. 使用Junit提供的@RunWith 
+
+  3. 告知spring的運行器, spring的IOC的創建方法和位置
+
+     @ContextConfiguration
+
+     ​	locations: 指定xml文件的位置, 加上classpath關鍵字, 表示在類路徑下
+
+     ​	classes: 指定註解類的字節碼
+
+### Spring IoC	 
