@@ -35,6 +35,8 @@ d.run(); // wrong
 
 > 加载完类后, 在堆内存的方法区中产生了一个Class类型的对象(一个类只有一个Class对象), 这个对象就包含了完整的类的结构信息. 我们可以通过这个对象看到类的结构. 反射的本质就是通过==JVM生成的class对象反向获取已加载对象的各种信息==
 
+## 泛型
+
 ## 	Collections
 
 ### 		HashMap
@@ -43,7 +45,7 @@ d.run(); // wrong
 
 链表 + 哈希表
 
-![image-20210105163759459](/Users/kim/Documents/java-study/review.assets/image-20210105163759459.png)
+<img src="/Users/kim/Documents/java-study/review.assets/image-20210105163759459.png" alt="image-20210105163759459" style="zoom:50%;" />
 
 #### HashMap常用域变量
 
@@ -424,12 +426,203 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 
 ### Spring MVC工作流程
 
-![image-20210106173422068](/Users/kim/Documents/java-study/review.assets/image-20210106173422068.png)
+<img src="/Users/kim/Documents/java-study/review.assets/image-20210106173422068.png" alt="image-20210106173422068" style="zoom:50%;" />
 
-![img](https://user-gold-cdn.xitu.io/2018/12/11/1679c3c51136aeb9?imageslim)
+<img src="https://user-gold-cdn.xitu.io/2018/12/11/1679c3c51136aeb9?imageslim" alt="img" style="zoom:50%;" />
 
 > 1. 当请求到达springmvc前段控制器的时候, 会到达DispatcherServlet的doService()方法
+>
 > 2. 然后调用doDispatcher()方法
+>
+> 3. 在doDispatcher() 调用了getHandler()方法获取合适的处理器, 这里会判断这个请求是否带有文件, 如果是MultipartRequest, 后面还有清理操作. 
+>
+>    ```java
+>    processedRequest = checkMultipart(request);
+>    multipartRequestParsed = (processedRequest != request);
+>    
+>    // Determine handler for the current request.
+>    mappedHandler = getHandler(processedRequest);
+>    ```
+>
+> 4. getHandler()会获取当前请求的处理器链**HandlerExecutionChain**, 当前处理器链封装了负责请求的处理器及其方法
+>
+>    <img src="/Users/kim/Documents/java-study/review.assets/image-20210108201111853.png" alt="image-20210108201111853" style="zoom:50%;" />
+>
+>    ```java
+>    // AbstractDetectingUrlHandlerMapping
+>    // 查询对应的handler
+>    protected void detectHandlers() throws BeansException {
+>    		ApplicationContext applicationContext = obtainApplicationContext();
+>    		String[] beanNames = (this.detectHandlersInAncestorContexts ?
+>    				BeanFactoryUtils.beanNamesForTypeIncludingAncestors(applicationContext, Object.class) :
+>    				applicationContext.getBeanNamesForType(Object.class));
+>    
+>    		// Take any bean name that we can determine URLs for.
+>    		for (String beanName : beanNames) {
+>    			String[] urls = determineUrlsForHandler(beanName);
+>    			if (!ObjectUtils.isEmpty(urls)) {
+>    				// URL paths found: Let's consider it a handler.
+>    				registerHandler(urls, beanName);
+>    			}
+>    		}
+>    
+>    		if ((logger.isDebugEnabled() && !getHandlerMap().isEmpty()) || logger.isTraceEnabled()) {
+>    			logger.debug("Detected " + getHandlerMap().size() + " mappings in " + formatMappingName());
+>    		}
+>    	}
+>    ```
+>
+>    
+>
+>    ```java
+>    protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+>    		if (this.handlerMappings != null) {
+>    			for (HandlerMapping mapping : this.handlerMappings) {
+>    				HandlerExecutionChain handler = mapping.getHandler(request); 
+>    				if (handler != null) {
+>    					return handler;
+>    				}
+>    			}
+>    		}
+>    		return null;
+>    	}
+>    ```
+>
+> 5. 然后根据获取到的处理器获取对应的处理器适配器, 通过getHandlerAdapter()获取
+>
+>    ```java
+>    // Determine handler adapter for the current request.
+>    HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler()); 
+>    /* =========================================================================*/
+>    protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletException {
+>    		if (this.handlerAdapters != null) {
+>    			for (HandlerAdapter adapter : this.handlerAdapters) {
+>    				if (adapter.supports(handler)) {
+>    					return adapter;
+>    				}
+>    			}
+>    		}
+>    		throw new ServletException("No adapter for handler [" + handler +
+>    				"]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
+>    	}
+>    ```
+>
+> 6. 然后调用handle()方法处理请求, 返回modelAndView对象, ModelAndView包含了视图逻辑名和渲染视图时需要用到的模型数据对象
+>
+>    ```java
+>    // Actually invoke the handler.
+>    mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+>    // go into handle()
+>    // AbstractHandlerMethodAdapter
+>    @Override
+>    	@Nullable
+>    	public final ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler)
+>    			throws Exception {
+>    
+>    		return handleInternal(request, response, (HandlerMethod) handler);
+>    	}
+>    // go into handleInternal()
+>    // RequestMappingHandlerAdapter
+>    protected ModelAndView handleInternal(HttpServletRequest request,
+>    			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+>    
+>    		ModelAndView mav;
+>    		checkRequest(request);
+>    
+>    		// Execute invokeHandlerMethod in synchronized block if required.
+>    		if (this.synchronizeOnSession) {
+>    			HttpSession session = request.getSession(false);
+>    			if (session != null) {
+>    				Object mutex = WebUtils.getSessionMutex(session);
+>    				synchronized (mutex) {
+>    					mav = invokeHandlerMethod(request, response, handlerMethod);
+>    				}
+>    			}
+>    			else {
+>    				// No HttpSession available -> no mutex necessary
+>    				mav = invokeHandlerMethod(request, response, handlerMethod);
+>    			}
+>    		}
+>    		else {
+>    			// No synchronization on session demanded at all...
+>    			mav = invokeHandlerMethod(request, response, handlerMethod);
+>    		}
+>    
+>    		if (!response.containsHeader(HEADER_CACHE_CONTROL)) {
+>    			if (getSessionAttributesHandler(handlerMethod).hasSessionAttributes()) {
+>    				applyCacheSeconds(response, this.cacheSecondsForSessionAttributeHandlers);
+>    			}
+>    			else {
+>    				prepareResponse(response);
+>    			}
+>    		}
+>    
+>    		return mav;
+>    	}
+>    // go into invokeHandlerMethod() -> 真正调用的方法, 最后返回modelAndView对象
+>    protected ModelAndView invokeHandlerMethod(HttpServletRequest request,
+>    			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+>    
+>    		ServletWebRequest webRequest = new ServletWebRequest(request, response);
+>    		try {
+>    			WebDataBinderFactory binderFactory = getDataBinderFactory(handlerMethod);
+>    			ModelFactory modelFactory = getModelFactory(handlerMethod, binderFactory);
+>    
+>    			ServletInvocableHandlerMethod invocableMethod = createInvocableHandlerMethod(handlerMethod);
+>    			if (this.argumentResolvers != null) {
+>    				invocableMethod.setHandlerMethodArgumentResolvers(this.argumentResolvers);
+>    			}
+>    			if (this.returnValueHandlers != null) {
+>    				invocableMethod.setHandlerMethodReturnValueHandlers(this.returnValueHandlers);
+>    			}
+>    			invocableMethod.setDataBinderFactory(binderFactory);
+>    			invocableMethod.setParameterNameDiscoverer(this.parameterNameDiscoverer);
+>    
+>    			ModelAndViewContainer mavContainer = new ModelAndViewContainer();
+>    			mavContainer.addAllAttributes(RequestContextUtils.getInputFlashMap(request));
+>    			modelFactory.initModel(webRequest, mavContainer, invocableMethod);
+>    			mavContainer.setIgnoreDefaultModelOnRedirect(this.ignoreDefaultModelOnRedirect);
+>    
+>    			AsyncWebRequest asyncWebRequest = WebAsyncUtils.createAsyncWebRequest(request, response);
+>    			asyncWebRequest.setTimeout(this.asyncRequestTimeout);
+>    
+>    			WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+>    			asyncManager.setTaskExecutor(this.taskExecutor);
+>    			asyncManager.setAsyncWebRequest(asyncWebRequest);
+>    			asyncManager.registerCallableInterceptors(this.callableInterceptors);
+>    			asyncManager.registerDeferredResultInterceptors(this.deferredResultInterceptors);
+>    
+>    			if (asyncManager.hasConcurrentResult()) {
+>    				Object result = asyncManager.getConcurrentResult();
+>    				mavContainer = (ModelAndViewContainer) asyncManager.getConcurrentResultContext()[0];
+>    				asyncManager.clearConcurrentResult();
+>    				LogFormatUtils.traceDebug(logger, traceOn -> {
+>    					String formatted = LogFormatUtils.formatValue(result, !traceOn);
+>    					return "Resume with async result [" + formatted + "]";
+>    				});
+>    				invocableMethod = invocableMethod.wrapConcurrentResult(result);
+>    			}
+>    
+>    			invocableMethod.invokeAndHandle(webRequest, mavContainer);
+>    			if (asyncManager.isConcurrentHandlingStarted()) {
+>    				return null;
+>    			}
+>    
+>    			return getModelAndView(mavContainer, modelFactory, webRequest);
+>    		}
+>    		finally {
+>    			webRequest.requestCompleted();
+>    		}
+>    	}
+>    ```
+>
+> 7. 得到modelAndView对象后, DispatcherServlet需要得到逻辑名对应的真实对象, 这项视图解析的工作通过调用ViewResolver来完成
+>
+> 8. 当得到真实的视图对象后, DispatcherServlet将请求分派给这个view对象, 由他完成Model数据的渲染工作, **processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException)**
+>
+>    ==7,8 两步在processDispatchResult()方法中的render()方法中执行==
+>
+> 9. 最终客户端得到响应
 
 >SpringMVC各個模块的作用
 >
@@ -814,7 +1007,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 >
 > Spring MVC提供了一个HandlerMapping接口的抽象类AbstractHandlerMapping，而AbstractHandlerMapping同时还实现了Ordered接口并继承了WebApplicationObjectSupport类。可以让HandlerMapping通过设置setOrder()方法提高优先级，并**通过覆盖initApplicationContext()方法实现初始化的一些工作。**
 >
-> ![image-20210107174217951](/Users/kim/Documents/java-study/review.assets/image-20210107174217951.png)
+> <img src="/Users/kim/Documents/java-study/review.assets/image-20210107174217951.png" alt="image-20210107174217951" style="zoom:50%;" />
 >
 > 以**SimpleUrlHandlerMapping**为例
 
@@ -879,9 +1072,162 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 # 网络协议
 
-## TCP/UDP
+## OSI 七层模型 与 TCP/IP 五层模型
 
-## HTTP
+<img src="/Users/kim/Documents/java-study/review.assets/image-20210108105822021.png" alt="image-20210108105822021" style="zoom:50%;" />
+
+网络接口层(数据链路层, 物理层) : 负责二进制数据传输, 010101电信号传输
+
+网络层: IP协议, IP寻址
+
+传输层: TCP, UDP协议
+
+应用层(应用层, 表示层, 会话层): 基于传输层规定应用程序的数据格式, 如Email, WWW, FTP
+
+<img src="/Users/kim/Documents/java-study/review.assets/image-20210108112439883.png" alt="image-20210108112439883" style="zoom:50%;" />
+
+## TCP(可靠传输协议)
+
+### TCP表头控制位
+
+> 八位从左到右分别是 CWR，ECE，URG，ACK，PSH，RST，SYN，FIN
+>
+> **ACK: **该位设为 1, 确认应答的字段有效, TCP规定除了最初建立连接时的 SYN 包之外该位必须设为 1;
+>
+> **SYN: **用于建立连接, 该位设为 1, 表示希望建立连接, 并在其序列号的字段进行序列号初值设定;
+>
+> **FIN: **该位设为 1, 表示今后不再有数据发送, 希望断开连接. 当通信结束希望断开连接时, 通信双方的主机之间就可以相互交换 FIN 位置为 1 的 TCP 段.
+
+### 三次握手
+
+> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108140155214.png" alt="image-20210108140155214" style="zoom:50%;" />
+>
+> 假设 A为客户端, B为服务端
+>
+> 1. A向B发送请求报文 SYN=1, ACK=0, 选择一个初始序号x, **这个序号表示的是按字节数计算**
+> 2. B 收到请求报文, 如果同意建议连接, 则向A 发送连接确认报文, SYN=1, ACK=1, 确认号为x+1, 表明收到报文x, 并请求报文x+1. 同时选择初始序号y.
+> 3. A收到B的连接确认报文后, 还要向B发送确认, 序号为x+1, 请求y+1号报文
+> 4. B收到A的确认后, 连接建立, 开始发送数据
+
+### 四次挥手(一般但不一定由客户端发起)
+
+> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108140132895.png" alt="image-20210108140132895" style="zoom:50%;" />
+>
+> 假设A为客户端, B为服务端
+>
+> 1. A向B发送FIN=1, ACK=1, 并包含一个希望接受者看到自己当前的序列号x 的报文,  此后A端不能再发送数据, 但是可以接收数据
+> 2. B收到报文, 上层应用程序会被告知A端发起了关闭工作,  然后回复报文带有确认序号x+1, 表示收到报文x
+> 3. 当A端收到B端的确认报文, A端进入等待关闭状态, 继续接收B端没有发送完成的数据
+> 4. 等B端所有数据发送完成, B端發送FIN=1, ACK=1報文, 序列号为y
+> 5. A端接收到B端的报文后回复确认报文y+1, 然后进入TIME-WAIT状态, 等待2个MSL(最大报文存活时间)后释放连接
+
+### 为什么需要三次握手, 四次挥手?
+
+> - 为什么要三次握手
+>
+>   客户端和服务端通信前要进行连接, "3次握手"的目的在于让双方都明确自己和对方的收发能力是否正常, **每次都是接收到数据包的一方可以得到一些结论，发送的一方其实没有任何头绪。我虽然有发包的动作，但是我怎么知道我有没有发出去，而对方有没有接收到呢？**
+>
+>   1. 第一次握手: 客戶端向服务端发送请求信息, 服务端接收到信息. **服务端** 确认 服务端接收功能正常, 客户端发送功能正常
+>
+>      服务端 ( ==服务端接收功能正常, 客户端发送功能正常== ), 客户端()
+>
+>   2. 第二次握手: 服务端向客户端发送回复信息, 客户端收到信息. **客户端** 确认 客戶端发送和接收功能正常, 服务端发送功能正常. **服务端** 确认  服务端接收功能正常
+>
+>      服务端(==服务端接收功能正常, 客户端发送功能正常==) 客户端(==客户端接收和发送功能正常, 服务端接收和发送功能正常==)
+>
+>   3. 第三次握手: 客户端向服务端发送确认信息, 服务端收到信息
+>
+>      服务端(==服务端接收和发送功能正常, 客户端发送和接收功能正常==) 客户端(==客户端接收和发送功能正常, 服务端接收和发送功能正常==)
+>
+>   到此建立连接成功, 双方都明确自己的收发功能正常
+>
+> - 为什么要四次挥手
+>
+>   TCP连接是双向传输的对等的模式, 就是说双方都可以同时向对方发送或接收数据. 当有一方要关闭连接时, 会发送指令告知对方, 我要关闭连接了
+>
+>   1. 第一次挥手: 客户端向服务端发送FIN=1, ACK=1, 表示客户端希望关闭连接
+>   
+>   2. 第二次挥手: 服务端接收到包后, 只能返回ACK, 表示知道客户端想要断开连接. **而不能立即返回FIN报文**, 因为结束数据传输的"指令"只能由应用层发送, 而传输层只是"搬运工", 无法自主关闭连接. 当服务端接收到这个FIN报文后, 就进入**CLOSE-WAIT**状态
+>   
+>      **CLOSE-WAIT**: 这个状态是为了让服务器发送还没传送完毕的数据. 
+>   
+>   3. 第三次挥手: 等待服务端发送完数据后, 服务端会向客户端发送FIN报文, 表示服务端希望关闭连接
+>   
+>   4. 第四次挥手: 客户端接收到服务端的FIN报文, 则会回复ACK报文, 表示知道, 然后进入**TIME-WAIT**状态, 客户端在两个MSL后悔自动关闭连接, 而服务端在接收到ACK报文后, 就自动关闭连接
+>   
+>      **TIME-WAIT**: 这个状态是为了确保最后一个确认报文能够到达, 如果服务端没有收到客户端发送的确认报文, 会重新发送FIN报文, 客户端如果在期间收到新的FIN报文, 则需要再等待2个MSL; 另外等待一段时间, 也是为了让本连接持续时间锁产生的所有报文能从网络中消失, 使得下一个新的连接不会出现旧的连接请求报文.
+>
+
+### TCP粘包, 拆包 及解决办法
+
+#### 什么是粘包和拆包
+
+> - 正常数据包的发送和接收: 包与包之间没有粘连, 包没有被拆开
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108164758774.png" alt="image-20210108164758774" style="zoom:50%;" />
+>
+> - 粘包: 接收端只收到一个数据包, 但这一个数据包中包含了发送端发送的两个数据包的信息. 由于接收端不知道这两个数据包的界限, 所以对于接收端来说很难处理
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108164957499.png" alt="image-20210108164957499" style="zoom:50%;" />
+>
+> - 拆包: 接收端虽然接收到两个数据包, 但是一个包是数据不完整的, 另一个是数据包多出了一块, 这种情况即发生了粘包和拆包, 对于接收端来说同样是不好处理的
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108165139333.png" alt="image-20210108165139333" style="zoom:50%;" />
+
+#### 为什么会发生拆包和粘包
+
+> - 要发送的数据大于TCP发送缓存区剩余空间大小, 就会发生拆包
+> - 待发送数据大于最大报文长度, TCP在传输前将会进行拆包
+> - 要发送的数据小于TCP发送缓存区的大小, TCP将多次写入缓冲区的数据一次发送出去, 将会发生粘包
+> - 接收端的应用层没有及时读取接收缓冲区的数据, 将会发生粘包
+
+#### 粘包, 拆包的解决办法
+
+> 由于TCP本身是面向字节流的, 无法理解上层的业务数据, 所以在底层是无法保证数据包不被拆包重组的, 因此这个问题只能通过上层协议涉及解决
+>
+> - **消息定长: **发送端将每个数据包封装为固定长度(长度不足的用0补充), 这样接收端每次接收缓冲区中读取固定长度的数据, 就不会发生粘包
+> - **设置消息边界: **服务端从网络流中按消息边界分离出消息内容
+> - **将消息分为消息头和消息体: **消息头中包含表示消息总长度(或者消息体长度)的字段
+
+### 滑动窗口
+
+> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108173358152.png" alt="image-20210108173358152" style="zoom:50%;" />
+>
+> 窗口是缓存的一部分, 用在暂时存放字节流. 发送方和接收方各有一个**字节流**, 接收方通过TCP报文中的窗口字段告诉发送方自己的窗口大小, 发送方根据这个值和其他信息设置自己的发送窗口大小. 这里控制的是==字节数大小==
+>
+> 发送窗口内的字节都允许被发送, 接收窗口内的字节都允许被接收. 如果发送窗口左部的字节已经发送并且收到了确认, 那么就将发送窗口向右滑动一定的距离, 直到左部第一个字节不是已发送且已确认状态; 接收窗口的滑动类似, 接收窗口左部字节已经发送确认并交付主机, 那么窗口就向右滑动
+>
+> **接收窗口只会对窗口内最后一个按序到达的字节进行确认**. 如: 接收窗口已经接收到的字节为{31, 34, 35}, 其中{31} 按序到达, {34, 35}不是, 因此只对字节31进行确认, 发送端接收到一个字节的确认后, 发送端就知道, 31之前的所有字节都已经被接收.
+
+### 流量控制
+
+> 流量控制是为了控制发送方的速率, 保证接收方来得及接收
+>
+> 在滑动窗口中则为控制发送方的滑动窗口大小, 从而影响发送方的发送速率.
+>
+> 发送端主机还会时不时发送一个**窗口探测的数据段**以获取最新的窗口大小信息
+
+### 拥塞控制
+
+> 发送方还需要维护一个叫 **拥塞窗口(cwnd)** 的状态变量, 这里控制的是==数据包数==, 注意: 拥塞窗口只是一个变量, 真正控制发送速率的是**发送窗口**的大小, 拥塞窗口指某一源端数据流在一个RTT内可以最多发送的**数据包**数
+>
+> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108175317884.png" alt="image-20210108175317884" style="zoom:50%;" />
+>
+> - 慢开始(慢启动), 拥塞避免
+>
+>   发送端最初执行慢开始, 令cwnd=1, 发送方只能发送一个报文段, 每当收到确认后, 将cwnd翻倍, 同时设定一个阈值, 当cwnd超过这个阈值时, 进入**拥塞避免**, 每轮cwnd只增加 1, 如果出现了**超时**, 则将**阈值减半**, 重新开始慢启动
+>
+> - 快重传, 快恢复
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108192438848.png" alt="image-20210108192438848" style="zoom:50%;" />
+>
+>   在接收方, 要求每次接收到报文都应该对最后一个已经收到的有序报文段进行确认(回复确认最后一个有序字节数, 这里用报文数描述). 例如已经接收到报文M1 和M2,此时收到M4, 应当发送对M2的确认
+>
+>   在发送方, 如果收到三个重复的确认, 那么可以知道下一个报文段丢失, 此时执行快重传, 立即重传下一个报文段. 例如: 收方陆续收到M5, M6, M7, 但M3 丢包, 发送方会收到3个M2的确认, 则M3丢失, 立即重传M3
+>
+>   在这种情况下, 只是丢失个别报文段, 而不是拥塞, 因此执行快速恢复, 阈值变为拥塞窗口的一半, 然后拥塞窗口从阈值开始, 直接进入拥塞避免.
+
+## Socket套接字
 
 
 
