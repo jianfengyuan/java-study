@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="ee97c9d6-8c8b-4fb4-8110-d0118220bb75" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kim/config/SpringConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kim/dao/IAccountDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kim/dao/impl/AccountDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kim/domain/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kim/utils/ConnectionUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kim/utils/TransactionManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/jdbcConf.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/testAccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring.md" beforeDir="false" afterPath="$PROJECT_DIR$/../spring.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring boot 實戰.mindnode/QuickLook/Preview.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring boot 實戰.mindnode/QuickLook/Preview.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring boot 實戰.mindnode/contents.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring boot 實戰.mindnode/contents.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring boot 實戰.mindnode/viewState.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring boot 實戰.mindnode/viewState.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java.mindnode/contents.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../java.mindnode/contents.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java.mindnode/viewState.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../../java.mindnode/viewState.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mybatis/mybatis_annotation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../mybatis/mybatis_annotation/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../review.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../review.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/config/SpringConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/config/JdbcConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/IAccountDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/impl/AccountDaoImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/factory/BeanFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/factory/BeanFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/IAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/service/IAccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/service/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/ui/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bean.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bean.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bean.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bean.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/IAccountDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/impl/AccountDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/factory/BeanFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/IAccountService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/impl/AccountServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kim/utils/ConnectionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/utils/ConnectionUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kim/utils/TransactionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kim/utils/TransactionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/spring.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kim/dao/IAccountDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kim/dao/IAccountDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kim/dao/impl/AccountDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kim/dao/impl/AccountDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kim/service/IAccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kim/service/IAccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kim/service/impl/AccountServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kim/service/impl/AccountServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +39,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
@@ -54,18 +53,21 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RebelAgentSelection">
+    <selection>jr</selection>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -82,6 +84,19 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -124,6 +139,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -135,11 +151,18 @@
       <option name="presentableId" value="Default" />
       <updated>1603099846692</updated>
       <workItem from="1603099851070" duration="13974000" />
+      <workItem from="1610265600132" duration="998000" />
+      <workItem from="1610345898619" duration="222000" />
+      <workItem from="1611644320424" duration="35000" />
+      <workItem from="1611644712041" duration="1344000" />
+      <workItem from="1611649237980" duration="374000" />
+      <workItem from="1611649633485" duration="354000" />
+      <workItem from="1611650574906" duration="3512000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2160" y="65" key="#Project_Structure" timestamp="1603104591105">
@@ -154,37 +177,58 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="588" y="466" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1603693226275" />
-    <state width="1238" height="305" key="GridCell.Tab.0.bottom" timestamp="1603852788842">
-      <screen x="1920" y="0" width="1280" height="800" />
+    <state x="663" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1611645338647">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1603698096472" />
+    <state x="663" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611645338647" />
+    <state width="1878" height="359" key="GridCell.Tab.0.bottom" timestamp="1611805070545">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="359" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070545" />
     <state width="1238" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1603852788842" />
     <state width="1878" height="185" key="GridCell.Tab.0.bottom/38.0.1882.1080/1920.23.1280.777@38.0.1882.1080" timestamp="1603695151025" />
-    <state width="1238" height="305" key="GridCell.Tab.0.center" timestamp="1603852788840">
-      <screen x="1920" y="0" width="1280" height="800" />
+    <state width="1878" height="359" key="GridCell.Tab.0.center" timestamp="1611805070543">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1603698096471" />
+    <state width="1878" height="359" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070543" />
     <state width="1238" height="305" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1603852788840" />
     <state width="1878" height="185" key="GridCell.Tab.0.center/38.0.1882.1080/1920.23.1280.777@38.0.1882.1080" timestamp="1603695151022" />
-    <state width="1238" height="305" key="GridCell.Tab.0.left" timestamp="1603852788699">
-      <screen x="1920" y="0" width="1280" height="800" />
+    <state width="1878" height="359" key="GridCell.Tab.0.left" timestamp="1611805070542">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1603698096470" />
+    <state width="1878" height="359" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070542" />
     <state width="1238" height="305" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1603852788699" />
     <state width="1878" height="185" key="GridCell.Tab.0.left/38.0.1882.1080/1920.23.1280.777@38.0.1882.1080" timestamp="1603695151021" />
-    <state width="1238" height="305" key="GridCell.Tab.0.right" timestamp="1603852788841">
-      <screen x="1920" y="0" width="1280" height="800" />
+    <state width="1878" height="359" key="GridCell.Tab.0.right" timestamp="1611805070544">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1603698096471" />
+    <state width="1878" height="359" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070544" />
     <state width="1238" height="305" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1603852788841" />
     <state width="1878" height="185" key="GridCell.Tab.0.right/38.0.1882.1080/1920.23.1280.777@38.0.1882.1080" timestamp="1603695151023" />
+    <state width="1878" height="359" key="GridCell.Tab.1.bottom" timestamp="1611805070557">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="359" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070557" />
+    <state width="1878" height="359" key="GridCell.Tab.1.center" timestamp="1611805070546">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="359" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070546" />
+    <state width="1878" height="359" key="GridCell.Tab.1.left" timestamp="1611805070545">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="359" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070545" />
+    <state width="1878" height="359" key="GridCell.Tab.1.right" timestamp="1611805070547">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="359" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611805070547" />
     <state x="498" y="202" key="Maven.ArtifactSearchDialog" timestamp="1603697556616">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="498" y="202" key="Maven.ArtifactSearchDialog/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1603697556616" />
-    <state x="2061" y="39" key="SettingsEditor" timestamp="1603105207443">
-      <screen x="1920" y="0" width="1280" height="800" />
+    <state x="212" y="53" key="SettingsEditor" timestamp="1611661995321">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="212" y="53" key="SettingsEditor/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611661995321" />
     <state x="2061" y="39" key="SettingsEditor/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1603105207443" />
     <state x="743" y="325" key="chooseDestDirectoryDialog" timestamp="1603693556359">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -198,5 +242,21 @@
       <screen x="1920" y="0" width="1280" height="800" />
     </state>
     <state x="2342" y="319" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1603441025969" />
+    <state x="458" y="167" width="1005" height="913" key="search.everywhere.popup" timestamp="1611653383332">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="458" y="167" width="1005" height="913" key="search.everywhere.popup/0.0.1920.1080/1920.0.1280.800@0.0.1920.1080" timestamp="1611653383332" />
+    <state x="2225" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080/1920.0.1280.800@1920.0.1280.800" timestamp="1611644729092" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.2.5.RELEASE/spring-context-5.2.5.RELEASE-sources.jar!/org/springframework/context/support/AbstractXmlApplicationContext.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

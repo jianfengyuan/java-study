@@ -8,6 +8,7 @@ import java.sql.SQLException;
 @Component("transactionManager")
 public class TransactionManager {
 
+    // 获取本地线程上的connection 进行事务管理
     @Autowired
     private ConnectionUtils connectionUtils;
 
@@ -19,7 +20,6 @@ public class TransactionManager {
         }
     }
     public void commit() {
-
         try {
             connectionUtils.getThreadConnection().commit();
         } catch (SQLException e) {
@@ -27,7 +27,6 @@ public class TransactionManager {
         }
     }
     public void rollback() {
-
         try {
             connectionUtils.getThreadConnection().rollback();
         } catch (SQLException e) {
@@ -35,7 +34,6 @@ public class TransactionManager {
         }
     }
     public void release() {
-
         try {
             connectionUtils.getThreadConnection().close(); // 把連接還回連接池中
             connectionUtils.removeConnection();

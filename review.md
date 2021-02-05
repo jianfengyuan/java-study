@@ -2,6 +2,21 @@
 
 ## 多态
 
+#### 重载与重写
+
+> **重载**就是同样的一个方法可以根据输入数据的不同, 做出不同的处理
+>
+> ​	重载: 发生在同一个类中, 方法名必须相同, 参数类型不同, 个数不同, 顺序不同, 方法返回值和访问修饰符可以不同. 编译器通过方法给出的参数类型与特定方法调用所使用的值类型进行匹配
+>
+> **重写**就是当子类继承自父类的相同方法, 输入数据一样, 但要做出有别于父类的响应时, 就要重写父类方法
+>
+> ​	重写: 重写发生在运行期, 是子类对父类允许访问的方法的实现过程进行重新编写. 
+>
+> > 1. 返回值类型, 方法名, 参数列表必须相同, 抛出的异常小于/等于父类, 访问修饰符类型大于/等于父类
+> > 2. 如果父类方法访问修饰符为static/ private/ final则子类不能不能重写该方法, 但是被static修饰的方法可以再次被声明
+> > 3. 构造方法没办法被重写
+> > 4. 如果方法返回类型是void和基本数据类型, 则返回值重写时不可修改, 但是如果方法的返回值是引用类型, 重写时是可以返回该引用类型的子类
+
 #### 向上转型
 
 子类引用的对象转换为父类类型称为向上转型 -> 父类引用指向子类对象
@@ -102,7 +117,7 @@ d.run(); // wrong
 
 ## 动态代理
 
-> JDK的动态代理对象不需要实现接口, 但要求目标对象必须实现接口, 否则不能使用动态代理
+> - JDK的动态代理对象不需要实现接口, 但要求目标对象必须实现接口, 否则不能使用动态代理
 >
 > ```java
 > public class TestProxy {
@@ -137,9 +152,17 @@ d.run(); // wrong
 > }
 > ```
 >
-> 
+> - CGLIB和JDK动态代理的区别
+>
+>   CGLIB
 
 ## 	Collections
+
+### Vector, ArrayList和LinkedList
+
+> - ArrayList和LinkedList都不是线程安全的, Vector是线程安全的
+> - Vector底层结构为Object[]数组, ArrayList底层结构为Object[]数组, LinkedList底层结构为链表(jdk 1.6以前是双向循环链表, 1.7以后是双向链表)
+> - 插入和删除: ArrayList默认插入到数组尾部(时间复杂度O(1)), 指定位置插入/删除, 需要将第i和第i个元素以后的元素前移/后移一位(复杂度为O(n-i)); LinkedList默认插入到链表尾部(复杂度接近O(1)), 指定位置插入/删除, 需要遍历到指定位置操作(复杂度接近O(n))
 
 ### 		HashMap
 
@@ -496,6 +519,20 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 
 #### 线程安全的HashMap -> ConcurrentHashMap
 
+## ==和equals()
+
+> ==: 判断两个对象的地址是否相同
+>
+> equals(): 如果类没有重写equals()方法, 通过equals()判断两个对象是否相等时, 与 **"=="**相同; 也可以重写equals()方法, 用于判断两个对象的内容是否相同
+>
+> - hashCode()
+>
+>   Object的hashcode方法是本地方法, 是用c/c++实现的, 该方法通常用对象的内存地址转化为整数之后返回
+>
+> - 为什么重写equals方法必须重写hashCode()方法
+>
+>   如果两个对象相等, 则hashcode必定相等, 但两个对象的hashcode相等, 两个对象却未必相同, hashCode()和equals()保持一致, 如果equals方法返回true, 那么两个对象的hasCode()返回值必须一样.
+
 ## IO
 
 > ```
@@ -690,7 +727,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 
 > 每创建一个Thread对象, Thread里包含一个ThreadLocalMap, 这个ThreadLocalMap就是由ThreadLocal管理, 每当执行**ThreadLocal.set**(), 就会获取当前线程对象, 然后获取**ThreadLocalMap**对象, 把变量存入到ThreadLocalMap中.
 >
-> 从源码中可以看到ThreadLocalMap是一个Entry的链表集合, Entry是一个弱引用对象的子类, 同时也是一个k-v对, k为ThreadLocal对象, v为要存入的对象. ThreadLocalMap 的寻址方式与HashMap类似. 
+> 从源码中可以看到ThreadLocalMap是一个Entry的**链表集合**, Entry是一个弱引用对象的子类, 同时也是一个k-v对, k为ThreadLocal对象, v为要存入的对象. ThreadLocalMap 的寻址方式与HashMap类似. 
 >
 > - **为什么Entry是一个弱引用对象**
 >
@@ -769,17 +806,177 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 > ![image-20210111195802762](/Users/kim/Documents/java-study/review.assets/image-20210111195802762.png)
 
+### 线程池
+
+> - 主要参数
+>
+>   corePoolSize: 核心线程数, 如果等于0, 则任务执行完后, 没有新任务请求进入时, 销毁线程池中的线程. 如果大于0, 即使本地任务执行完毕, 核心线程也不会被销毁
+>
+>   maximumPoolSize: 最大线程数. 必须大于等于1, 且大于等于corePoolSize, 如果与corePoolSize相等, 则线程池大小固定. 如果大于corePoolSize, 则最多创建maximumPoolSize个线程执行任务. 
+>
+>   keepAliveTime: 线程空闲时间. 线程池中线程空闲时间达到了keepAliveTime时, 线程会被销毁, 只到剩下corePoolSize个线程为止. 默认情况下, 线程池的最大线程数大于corePoolSize时, keepAliveTime才会起作用
+>
+>   unit: TimeUnit表示时间单位
+>
+>   workQueue: 缓存队列, 当请求线程数大于maximumPoolSize时, 线程进入BlockingQueue阻塞队列.
+>
+>   threadFactory: 线程工厂. 用来生产一组相同任务的线程. 主要用于设置生成的线程名词前缀, 是否为守护线程以及优先级
+>
+>   handler: 执行拒绝策略对象. 当达到任务缓存上限时(超过workQueue参数能存储的任务数), 执行拒接策略, 可以看做简单的限流保护. 
+>
+> - 友好的拒绝策略
+>
+>   保存在数据库中国, 进行削峰填谷, 在空闲时再拿出来执行
+>
+>   转向某个提示页面
+>
+>   打印日志
+>
+> - sleep()和wait()的区别
+>
+> - run()和start()区别
+>
+> - notify()和notifyAll()区别
+>
+> - 线程的状态
+>
+>   RUNNING: 
+>
+>   SHUTDOWN: 
+>
+>   STOP: 
+>
+>   TIDYING: 
+>
+>   TERMINATED: 
+
 ## 	GC
 
 ## JVM
 
+### JVM內存分布
+
+> - JDK1.6以前
+>
+>   堆区, 方法区(运行时常量池), 虚拟机栈区, 本地方法栈区, 程序计数器, 直接内存
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210125104619372.png" alt="image-20210125104619372" style="zoom:50%;" />
+>
+> - JDK 1.8 以后
+>
+>   堆区, 虚拟机栈区, 本地方法栈区, 程序计数器, 直接内存(**Metaspace(原方法区)**)
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210125104645276.png" alt="image-20210125104645276" style="zoom:50%;" />
+>
+> - 各个分区的作用
+>
+>   线程私有
+>
+>   - 程序计数器
+>
+>     可以看做当前线程执行的字节码行号指示器. 字节码解释器工作时, 通过改变这个计数器来选取下一条需要执行的字节码指令. 为了线程切换后也能恢复到正确的执行位置, 每个线程都需要一个线程私有的计数器.
+>
+>   - 虚拟机栈(VM Stack)
+>
+>     虚拟机栈由栈帧组成, 每个栈帧都有: **局部变量表, 操作数栈, 动态链接, 方法出口信息**
+>
+>     局部变量表主要存放了编译期可知的八大数据类型, 对象引用(reference类型)
+>
+>   - 本地方法栈(Native Method Stack)
+>
+>     与虚拟机栈相似, 执行的是Nactive Method, 此方法由C/C++编写. 在Hotspot虚拟机中, 本地方法栈和虚拟机栈合二为一.
+>
+>   线程共享
+>
+>   - 堆(Heap)
+>
+>     是JVM管理的内存中最大的一块, 这一块内存是**线程共享**的, 在虚拟机启动时创建. 此区域主要存储对象实例, 几乎所有的对象实例以及数组都在这里分配内存. 根据GC的算法, 还可以细分成Eden, Survivor_0, Survivor_1. 大部分对象都会现在Eden区分配, 在一次新生代垃圾回收后, 会进入s0或s1, 当对象积累到某个年龄, 则会晋升到老年代, 放入老年区
+>
+>   - 方法区(Method Area)
+>
+>     用于存放已被虚拟机加载的类信息, 常量, 静态变量, 即时编译器编译后的代码
+>
+>     - 运行时常量池
+>
+>       Class文件中处理有类的版本, 字段, 方法, 接口等描述信息, 还有常量池表
+>
+>   - 直接内存(Direct Memory)
+
 ### 类的加载(ClassLoader)
 
 > 当我们新建一个对象new student(), JVM会从磁盘中寻找并加载student.class对象JVM内存中. JVM自动创建一个关于student.class的class, 这个class只能由JVM产生, 其构造方法是private的. 这个class包含的是student.class的一些信息, 并且一个类只会生成一个class对象
+>
+> - 双亲委派机制
+>
+>   当某个类加载器需要加载某个`.class`文件时, 它首先把这个任务委托给他的上级类加载器, 递归这个操作, 如果上级的类加载器没有加载, 自己才会去加载这个类. 防止重复加载同一个.class, 保证核心的.class不被篡改.
+>
+>   - 各种类加载器
+>
+>     - BootrapClassLoader(启动类加载器)
+>
+>       c++编写, 加载java 核心库, 构造ExtClassLoader 和 AppClassLoader
+>
+>     - ExtClassLoader(标准扩展类加载器)
+>
+>       java编写, 加载扩展库, 如classpath中的jre, javax.*
+>
+>     - AppClassLoader(系统类加载器)
+>
+>       java编写, 加载project根目录的class
+>
+>     - CustomClassLoader(自定义类加载器)
+>
+>       java编写, 可以加载指定路径的class文件
+>
+>   <img src="/Users/kim/Documents/java-study/review.assets/image-20210125194740750.png" alt="image-20210125194740750" style="zoom:50%;" />
+>
+> - 对象创建过程
+>
+>   1. 类加载检查
+>
+>      虚拟机遇到一条new 指令时, 首先去检查这个指令的参数是否能在常量池中定位到这个类的符号引用. 并且检查这个符号引用代表的类是否被加载过(双亲委派机制), 解析和初始化过. 
+>
+>   2. 分配内存
+>
+>      通过类加载检查后, 开始为新生对象分配内存, 对象所占内存大小在类加载完成后就可以确定. 分配内存的方式分为**指针碰撞**和**空闲列表**(根据GC的方式不同使用不同的方法分配内存), 
+>
+>      - 分配内存的线程安全问题
+>
+>   3. 初始化零值
+>
+>      内存分配完成后, JVM需要将分配到的内存空间都初始化为零值.
+>
+>   4. 设置对象头
+>
+>      初始化零值完成后, JVM要对对象设置对象头, 如: 对象属于哪个类的实例, 如何才能找到类的元数据信息, 对象的哈希码, 对象的GC分代年龄, 这些信息存放在对象头中. 还有对象锁的信息也会存在对象头的**Mark Word**中.
+>
+>   5. 执行init()方法
+>
+>      以上方法完成后一个新生对象就创建完成, 但是仍不是程序所需要的目标对象, 还要对对象中的属性进行赋值, 对象才创建完成.
 
-## 对象内存分布
+### 对象内存结构
 
-
+> Java对象由三部分组成: **对象头, 实例数据, 对齐填充**
+>
+> - 对象头
+>
+>   对象头包含两个部分信息: **Mark Word**和**类型指针(klass)**
+>
+>   - Mark word
+>
+>     用于存储对象自身的运行时数据, 如: HashCode, GC分代年龄, 锁状态标志, 线程持有的锁, 偏向线程的ID, 偏向时间戳等. ==在32位虚拟机中占4B, 在64位虚拟机中占8B==
+>
+>   - 类型指针(klass)
+>
+>     对象指向它的类元数据(存放在方法区/ MetaSpace)的指针, JVM通过这个指针来确定这个对象对应的类信息. 如果对象是一个数组, 对象头中还需要存储这个数组的长度以确定数组的大小. ==在32位虚拟机中占4B, 在64位虚拟机中占8B, 开启指针压缩后, 占4B==
+>
+> - 实例数据
+>
+>   实例数据包含两种: 八大基本数据类型(byte(1B), boolean(1B), char(2B), short(2B), int(4B), float(4B), long(8B), double(8B) )和引用类型reference(4B)
+>
+> - 对齐填充(padding)
+>
+>   JVM内存管理要求Java对象内存起始地址必须为8的倍数, 因此Java对象大小必须为8的倍数, 如果对象头+实例大小不为8的倍数, 需要用padding进行填充
 
 # 数据库
 
@@ -1883,6 +2080,28 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 ## 	Kafka
 
 > - kafka的数据存储在硬盘中
+>
+> - Kafka中主要组成部分
+>
+>   - Producer(生产者)
+>
+>     负责生产消息
+>
+>   - Consumer(消费者)
+>
+>     负责消费消息
+>
+>   - Broker
+>
+>     可以看做Kafka实例, 多个Broker组成一个Kafka Cluster, 每个Broker可以包含多个Topic
+>
+>   - Topic
+>
+>     Producer会把消息推送到特定的Topic, Consumer通过订阅Topic来消费消息
+>
+>   - Partition
+>
+>     一个Topic可以包含多个Partition, 并且同一个Topic下的Partition可以分布在不同的Broker上
 
 ## Zookeeper
 
@@ -2128,4 +2347,10 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 >       ![HTTPS 连接建立过程](https://cdn.jsdelivr.net/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
 
+
+# 计算机基础
+
+## 进程和线程
+
+> 进程是系统分配资源的最小单位, 线程是代码执行的最小单位
 

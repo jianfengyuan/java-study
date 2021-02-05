@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ConnectionUtils {
 
     @Autowired
-    private DataSource dataSource;
+    private DataSource dataSource;// 线程池
     private ThreadLocal<Connection> tl = new ThreadLocal<>();
 
     /**
