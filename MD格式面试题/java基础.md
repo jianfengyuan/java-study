@@ -53,6 +53,12 @@
 
 虽 然 WeakReference  与 SoftReference   都 有利 于 提 高 GC  和 内 存的 效 率 ，但 是WeakReference  ，一旦失去最后一个强引用，就会被 GC  回收，而软引用虽然不能阻止被回收，但是可以延迟到 JVM  内存不足的时候。
 
+## 面向对象和面向过程的区别
+
+`面向过程`：面向过程性能比面向对象高。 因为类调用时需要实例化，开销比较大，比较消耗资源，所以当性能是最重要的考量因素的时候，比如单片机、嵌入式开发、Linux/Unix等一般采用面向过程开发。但是，面向过程没有面向对象易维护、易复用、易扩展。
+
+`面向对象`：面向对象易维护、易复用、易扩展。 因为面向对象有封装、继承、多态性的特性，所以可以设计出低耦合的系统，使系统更加灵活、更加易于维护。但是，面向对象性能比面向过程低。
+
 ## JDK 和 JRE 的区别？
 
 JDK：Java Development Kit 的简称，Java 开发工具包，提供了 Java 的开发环境和运行环境。
@@ -88,7 +94,7 @@ JRE：Java Runtime Environment 的简称，Java 运行环境，为 Java 的运�
 
 ### 可变性
 
-简单的来说：String 类中使用 final 关键字修饰字符数组来保存字符串，**`private　final　char　value[]`**，所以 String 对象是不可变的。而StringBuilder 与 StringBuffer 都继承自 AbstractStringBuilder 类，在 AbstractStringBuilder 中也是使用字符数组保存字符串char[]value 但是没有用 final 关键字修饰，所以这两种对象都是可变的。
+简单的来说：String 类中使用 final 关键字修饰字符数组来保存字符串，private　final　char　value[]，所以 String 对象是不可变的。而StringBuilder 与 StringBuffer 都继承自 AbstractStringBuilder 类，在 AbstractStringBuilder 中也是使用字符数组保存字符串char[]value 但是没有用 final 关键字修饰，所以这两种对象都是可变的。
 
 StringBuilder 与 StringBuffer 的构造方法都是调用父类构造方法也就是 AbstractStringBuilder 实现的，大家可以自行查阅源码。
 
@@ -107,7 +113,7 @@ AbstractStringBuilder(int capacity) {
 
 ### 线程安全性
 
-String 中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder 是 StringBuilder 与 StringBuffer 的公共父类，定义了一些字符串的基本操作，如 expandCapacity、append、insert、indexOf 等公共方法。**StringBuffer 对方法加了同步锁或者对调用的方法加了同步锁**，所以是线程安全的。**StringBuilder 并没有对方法进行加同步锁**，所以是非线程安全的。　
+String 中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder 是 StringBuilder 与 StringBuffer 的公共父类，定义了一些字符串的基本操作，如 expandCapacity、append、insert、indexOf 等公共方法。StringBuffer 对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。StringBuilder 并没有对方法进行加同步锁，所以是非线程安全的。　
 
 ### 性能
 
@@ -181,6 +187,10 @@ SpringAOP中的动态代理主要有两种方式，JDK动态代理和CGLIB动态
 
 intern()方法设计的初衷，就是重用String对象，以节省内存消耗。这么说可能有点抽象，那么就用例子来证明。也就是会从常量池中首先获取
 
+## String 为什么是不可变的？
+
+String 类中使用 final 关键字修饰字符数组来保存字符串，`private　final　char　value[]`，所以 String 对象是不可变的。而StringBuilder 与 StringBuffer 都继承自 AbstractStringBuilder 类，在 AbstractStringBuilder 中也是使用字符数组保存字符串`char[]value` 但是没有用 final 关键字修饰，所以这两种对象都是可变的。
+
 ## 抽象类和接口的区别是什么？
 
 `实现`：抽象类的子类使用 extends 来继承；接口必须使用 implements 来实现接口。
@@ -221,6 +231,12 @@ NoSuchMethodException 方法不存在异常
 IOException IO 异常
 
 SocketException Socket 异常
+
+## 什么是动态代理，怎么实现动态代理？
+
+动态代理是运行时动态生成代理类。 动态代理的应用有 spring aop、hibernate 数据查询、测试框架的后端 mock、rpc，Java注解对象获取等。
+
+JDK 原生动态代理和 cglib 动态代理。JDK 原生动态代理是基于接口实现的，而 cglib 是基于继承当前类的子类实现的。
 
 ## 什么是 Java 序列化？什么情况下需要序列化？
 
@@ -296,7 +312,7 @@ final 修饰的变量叫常量，常量必须初始化，初始化之后值就�
 
 ## Java 中的 Math. round(-1. 5) 等于多少？
 
-等于 -1。round()是四舍五入，注意负数5是舍的，**Math.floor(x+0.5)**例如：Math.round(1.5)值是2，Math.round(-1.5)值是-1。
+等于 -1。round()是四舍五入，注意负数5是舍的，例如：Math.round(1.5)值是2，Math.round(-1.5)值是-1。
 
 ## == 与 equals 的区别？
 

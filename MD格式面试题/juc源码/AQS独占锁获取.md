@@ -144,7 +144,7 @@ private transient volatile Node tail;
 
 - thread：表示当前Node所代表的线程
 
-- waitStatus：表示节点所处的等待状态，共享锁模式下只需关注三种状态：SIGNAL CANCELLED 初始态(0)
+- waitStatus：表示节点所处的等待状态，独占锁模式下只需关注三种状态：SIGNAL CANCELLED 初始态(0)
 - prev next：节点的前驱和后继
 - nextWaiter：进作为标记，值永远为null，表示当前处于独占锁模式
 

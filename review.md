@@ -170,7 +170,7 @@ d.run(); // wrong
 
 链表 + 哈希表
 
-<img src="/Users/kim/Documents/java-study/review.assets/image-20210105163759459.png" alt="image-20210105163759459" style="zoom:50%;" />
+<img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210105163759459.png" alt="image-20210105163759459" style="zoom:50%;" />
 
 #### HashMap常用域变量
 
@@ -670,7 +670,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 >   每个锁(**Mark Word**)关联一个线程持有者和一个计数器, 如果计数器为0, 表示该锁没有被任何线程持有, 那么任何线程都可能或得该锁进而调用相应的方法. 当一个线程请求成功后, JVM会记下持有锁的线程, 并将计数器记为1. 此时其他线程请求该锁, 则必须等待. 而持有该锁的线程如果再次请求这个锁, 就可以再次拿到这个锁, 同时计数器会递增, 每退出一个synchronized方法, 计数器会递减, 当计数器为0时, 释放该锁
 >
->   ![image-20210111195539258](/Users/kim/Documents/java-study/review.assets/image-20210111195539258.png)
+>   ![image-20210111195539258](/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210111195539258.png)
 
 ### ReentrantLock与Synchronized的区别
 
@@ -804,7 +804,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 > - 自旋锁
 > - 重量级锁
 >
-> ![image-20210111195802762](/Users/kim/Documents/java-study/review.assets/image-20210111195802762.png)
+> ![image-20210111195802762](/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210111195802762.png)
 
 ### 线程池
 
@@ -860,13 +860,13 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 >   堆区, 方法区(运行时常量池), 虚拟机栈区, 本地方法栈区, 程序计数器, 直接内存
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210125104619372.png" alt="image-20210125104619372" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210125104619372.png" alt="image-20210125104619372" style="zoom:50%;" />
 >
 > - JDK 1.8 以后
 >
 >   堆区, 虚拟机栈区, 本地方法栈区, 程序计数器, 直接内存(**Metaspace(原方法区)**)
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210125104645276.png" alt="image-20210125104645276" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210125104645276.png" alt="image-20210125104645276" style="zoom:50%;" />
 >
 > - 各个分区的作用
 >
@@ -928,7 +928,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 >       java编写, 可以加载指定路径的class文件
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210125194740750.png" alt="image-20210125194740750" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210125194740750.png" alt="image-20210125194740750" style="zoom:50%;" />
 >
 > - 对象创建过程
 >
@@ -1046,7 +1046,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 >     e.g. 下图中如果使用仅使用**age/ position**字段进行查询, 可以看到在叶子节点的序列是乱序的, 则索引失效
 >
->     <img src="/Users/kim/Documents/java-study/review.assets/image-20210115182250959.png" alt="image-20210115182250959" style="zoom:50%;" />
+>     <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210115182250959.png" alt="image-20210115182250959" style="zoom:50%;" />
 >
 >     - union, in, or都能够命中索引, 如果or的前半步包含索引, 后半部不包含索引, 则索引失效
 >
@@ -1309,7 +1309,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 >   - 更新策略: 
 >
->     0. 当提交事务时, 不降缓冲区的redo日志写入磁盘的日志文件, 而等待主线程每秒刷新
+>     0. 当提交事务时, 不将缓冲区的redo日志写入磁盘的日志文件, 而等待主线程每秒刷新
 >     1. 在事务提交时, 将缓冲区的redo日志同步写入磁盘, 保证一定会写入成功
 >     2. 在事务提交时, 将缓冲区的redo日志异步写入磁盘, 其不能保证commit时肯定会写入redo日志文件
 
@@ -1331,7 +1331,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 >   - Intention Exclusive Lock(IX, 意向排他锁)
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210119202756678.png" alt="image-20210119202756678" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210119202756678.png" alt="image-20210119202756678" style="zoom:50%;" />
 >
 >   如果一个事务请求的锁模式与当前的锁兼容， InnoDB 就将请求的锁授予该事务； 反之， 如果两者不兼容，该事务就要等待锁释放
 >
@@ -1420,7 +1420,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 
 ### Spring MVC工作流程
 
-<img src="/Users/kim/Documents/java-study/review.assets/image-20210106173422068.png" alt="image-20210106173422068" style="zoom:50%;" />
+<img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210106173422068.png" alt="image-20210106173422068" style="zoom:50%;" />
 
 <img src="https://user-gold-cdn.xitu.io/2018/12/11/1679c3c51136aeb9?imageslim" alt="img" style="zoom:50%;" />
 
@@ -1440,7 +1440,7 @@ HashTable虽然线程安全, 但是使用synchronize这个重量级锁导致效�
 >
 > 4. getHandler()会获取当前请求的处理器链**HandlerExecutionChain**, 当前处理器链封装了负责请求的处理器及其方法
 >
->    <img src="/Users/kim/Documents/java-study/review.assets/image-20210108201111853.png" alt="image-20210108201111853" style="zoom:50%;" />
+>    <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108201111853.png" alt="image-20210108201111853" style="zoom:50%;" />
 >
 >    ```java
 >    // AbstractDetectingUrlHandlerMapping
@@ -1650,7 +1650,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 > 流程 2-3
 >
-> <img src="/Users/kim/Documents/java-study/review.assets/image-20210106175944616.png" alt="image-20210106175944616" style="zoom:50%;" />
+> <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210106175944616.png" alt="image-20210106175944616" style="zoom:50%;" />
 >
 > DispatcherServlet 是一个标准的Servlet对象, 声明周期也有3个, 初始化, 请求处理, 销毁. 分别对应Servlet的init(), service() 和destroy()
 >
@@ -2001,7 +2001,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 >
 > Spring MVC提供了一个HandlerMapping接口的抽象类AbstractHandlerMapping，而AbstractHandlerMapping同时还实现了Ordered接口并继承了WebApplicationObjectSupport类。可以让HandlerMapping通过设置setOrder()方法提高优先级，并**通过覆盖initApplicationContext()方法实现初始化的一些工作。**
 >
-> <img src="/Users/kim/Documents/java-study/review.assets/image-20210107174217951.png" alt="image-20210107174217951" style="zoom:50%;" />
+> <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210107174217951.png" alt="image-20210107174217951" style="zoom:50%;" />
 >
 > 以**SimpleUrlHandlerMapping**为例
 
@@ -2046,20 +2046,6 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 ## SpringBoot
 
-# MySQL
-
-## 数据库引擎
-
-### MyISAM VS Innodb
-
-### 事务
-
-## SQL优化
-
-### 索引
-
-# 中间件
-
 ## 	Redis
 
 > 1. Session共享 -> 服务无状态 -> 方便扩容
@@ -2075,7 +2061,53 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 >
 >     因为不同数据有可能发生hash碰撞, 因此多个hash算法可以降低布隆过滤器的误判几率
 >
+> - Redis持久化方式
+>
+> 	- RDB
+>
+> 		RDB持久化机制, 在一段时间内, 达到了某个修改次数后, Redis就会把内存`数据快照(Snapshot)`持久化到硬盘中
+>
+> 		持久化原理: Redis单独fork一个子进程出来对数据进行持久化, 进程先会把数据写进一个临时文件中, 当数据持久化过程结束后, 对临时文件改名, 替换上次持久化的文件. 在持久化的过程中, 不涉及主进程的IO操作, 因此非常高效
+>
+> 		**优势**: 持久化过程高效, 适合大规模数据备份及恢复; 
+>
+> 		**劣势**: 每隔一段时间进行备份, 当服务意外宕机时, 会丢失最后一次快照的所有修改, 因此适合对一致性和完整性要求不高的项目; 因为fork 出一个子进程, 内存中的数据被克隆了一份, 因此所占内存为约为原来的两倍; 当数据量非常大的时候, fork的过程也相当耗时, 会导致Redis一些毫秒级服务不能响应
+>
+> 	- AOF
+>
+> 		AOF持久化机制, 是日志型持久化机制, 把Redis所有写命令(增, 删, 改)都存储到日志文件中, 读命令不存储. 当需要恢复数据时, 把日志文件中的命令执行一次, 达到持久化目的.
+>
+> 		日志文件只能在文件末尾追加内容, 不能改写文件.
+>
+> 		Redis启动时, 就会把日志文件读取并执行命令, 把数据恢复到内存中
+>
+> 		Rewrite机制
+>
+> 		由于AOF使用文件追加的方式创建日志, 日志文件会越来越大, 因此新增了重写(rewrite机制): 当日志文件因为持续增长超过了阈值时, Redis就会触发重写机制, 对AOF文件进行压缩, 只保留恢复数据的最小指令集, 主进程需要fork出一个子进程来重写日志文件(也是先写进临时文件再进行替换), 子进程遍历内存中的数据, 每条记录用set操作描述, Redis会记录上次进行重写的AOF大小, 默认配置是当AOF文件为上次备份的AOF文件大小的两倍时或文件大于64M时触发重写机制.
+>
+> 		**优势:** AOF还有两个机制: appendsync everysec, 异步记录, 每秒记录指令, 如果意外宕机, 只会丢失1s内的操作和appendsync always, 同步持久化, 每执行一次操作都会把指令记录到日志中, 虽然不比RDB高效, 但是完整性和一致性较好
+>
+> 		**劣势:** 相同数据而言, AOF文件远大于RDB文件, 因为是重新执行一次指令, 因此恢复数据速度较慢. 根据同步策略的不同, AOF可能会比RDB效率稍慢(异步策略与RDB效率相同)
+>
+> - 哨兵机制
+>
+> - 主从复制
+>
+> 	- 主要用途
+>
+> 		读写分离: 适用于读多写少情景, 增加从机, 提高读的速度, 提高并发度
+>
+> 		数据容灾恢复: 从机复制主机数据, 相当于对主机数据做备份
+>
+> - Redis单线程?
+>
+> - 淘汰策略
+>
+> - 缓存雪崩
+>
 > - 缓存穿透
+>
+> - 缓存击穿
 
 ## 	Kafka
 
@@ -2105,6 +2137,10 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 ## Zookeeper
 
+> - CAP理论(Consistency 一致性, Availability可用性, Partition tolerance分区容错性)
+>
+> 	zookeeper保证了CP, 当zookeeper挂掉超过一半节点时, 服务器就会挂掉, 因此不能保证高可用性. Zookeeper 的follower节点宕掉重启后, 重新执行日志指令, 追上进度, 因此保证了最终一致性
+>
 > - 用途: 注册中心, 分布式锁
 >
 > - ZAB协议
@@ -2113,21 +2149,23 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 >
 > - 领导者选举算法
 >
->   数据越新 -> 能力越强?
+>   zxid越大 -> 数据越新 -> 能力越强
+>
+>   ![image-20210215211717036](/Users/jianfengyuan/Library/Application Support/typora-user-images/image-20210215211717036.png)
+>
+>   上图中 因为==过半机制==, 所以节点2胜选成为leader. 当有新的节点3加入集群, 节点3会向各个节点发送自己的选票, 但是收到的选票都是选节点2为leader, 也是因为==过半机制==因此节点3自动成为follower
 >
 > - 2PC(二阶段提交)
 >
 >   预提交 - ack -提交
 >
->   过半机制
->
-> - CAP
+>   ![image-20210215213254696](/Users/jianfengyuan/Library/Application Support/typora-user-images/image-20210215213254696.png)
 
 # 网络协议
 
 ## OSI 七层模型 与 TCP/IP 五层模型
 
-<img src="/Users/kim/Documents/java-study/review.assets/image-20210108105822021.png" alt="image-20210108105822021" style="zoom:50%;" />
+<img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108105822021.png" alt="image-20210108105822021" style="zoom:50%;" />
 
 网络接口层(数据链路层, 物理层) : 负责二进制数据传输, 010101电信号传输
 
@@ -2137,11 +2175,11 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 应用层(应用层, 表示层, 会话层): 基于传输层规定应用程序的数据格式, 如Email, WWW, FTP
 
-<img src="/Users/kim/Documents/java-study/review.assets/image-20210108112439883.png" alt="image-20210108112439883" style="zoom:50%;" />
+<img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108112439883.png" alt="image-20210108112439883" style="zoom:50%;" />
 
 ## TCP(可靠传输协议)
 
-![image-20210113181559042](/Users/kim/Documents/java-study/review.assets/image-20210113181559042.png)
+![image-20210113181559042](/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210113181559042.png)
 
 ### TCP表头控制位
 
@@ -2157,7 +2195,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 ### 三次握手
 
-> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108140155214.png" alt="image-20210108140155214" style="zoom:50%;" />
+> <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108140155214.png" alt="image-20210108140155214" style="zoom:50%;" />
 >
 > 假设 A为客户端, B为服务端
 >
@@ -2168,7 +2206,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 ### 四次挥手(一般但不一定由客户端发起)
 
-> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108140132895.png" alt="image-20210108140132895" style="zoom:50%;" />
+> <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108140132895.png" alt="image-20210108140132895" style="zoom:50%;" />
 >
 > 假设A为客户端, B为服务端
 >
@@ -2221,15 +2259,15 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 > - 正常数据包的发送和接收: 包与包之间没有粘连, 包没有被拆开
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108164758774.png" alt="image-20210108164758774" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108164758774.png" alt="image-20210108164758774" style="zoom:50%;" />
 >
 > - 粘包: 接收端只收到一个数据包, 但这一个数据包中包含了发送端发送的两个数据包的信息. 由于接收端不知道这两个数据包的界限, 所以对于接收端来说很难处理
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108164957499.png" alt="image-20210108164957499" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108164957499.png" alt="image-20210108164957499" style="zoom:50%;" />
 >
 > - 拆包: 接收端虽然接收到两个数据包, 但是一个包是数据不完整的, 另一个是数据包多出了一块, 这种情况即发生了粘包和拆包, 对于接收端来说同样是不好处理的
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108165139333.png" alt="image-20210108165139333" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108165139333.png" alt="image-20210108165139333" style="zoom:50%;" />
 
 #### 为什么会发生拆包和粘包
 
@@ -2248,7 +2286,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 ### 滑动窗口
 
-> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108173358152.png" alt="image-20210108173358152" style="zoom:50%;" />
+> <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108173358152.png" alt="image-20210108173358152" style="zoom:50%;" />
 >
 > 窗口是缓存的一部分, 用在暂时存放字节流. 发送方和接收方各有一个**字节流**, 接收方通过TCP报文中的窗口字段告诉发送方自己的窗口大小, 发送方根据这个值和其他信息设置自己的发送窗口大小. 这里控制的是==字节数大小==
 >
@@ -2268,7 +2306,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 
 > 发送方还需要维护一个叫 **拥塞窗口(cwnd)** 的状态变量, 这里控制的是==数据包数==, 注意: 拥塞窗口只是一个变量, 真正控制发送速率的是**发送窗口**的大小, 拥塞窗口指某一源端数据流在一个RTT内可以最多发送的**数据包**数
 >
-> <img src="/Users/kim/Documents/java-study/review.assets/image-20210108175317884.png" alt="image-20210108175317884" style="zoom:50%;" />
+> <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108175317884.png" alt="image-20210108175317884" style="zoom:50%;" />
 >
 > - 慢开始(慢启动), 拥塞避免
 >
@@ -2276,7 +2314,7 @@ SpringMVC 如何处理request (从request 到controller的过程, 图中 1- 6的
 >
 > - 快重传, 快恢复
 >
->   <img src="/Users/kim/Documents/java-study/review.assets/image-20210108192438848.png" alt="image-20210108192438848" style="zoom:50%;" />
+>   <img src="/Users/jianfengyuan/Documents/java_study/java-study/review.assets/image-20210108192438848.png" alt="image-20210108192438848" style="zoom:50%;" />
 >
 >   在接收方, 要求每次接收到报文都应该对最后一个已经收到的有序报文段进行确认(回复确认最后一个有序字节数, 这里用报文数描述). 例如已经接收到报文M1 和M2,此时收到M4, 应当发送对M2的确认
 >

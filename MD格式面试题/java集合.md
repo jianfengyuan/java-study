@@ -136,6 +136,8 @@ TreeMap、TreeSet以及JDK1.8之后的HashMap底层都用到了红黑树。红�
 
 所以综合了以上情况就取了一个 0.5 到 1.0 的平均数 0.75 作为加载因子。
 
+0.75与泊松分布的关系：当负载因子=0.75，带入泊松分布公式中，计算出来长度为8时，概率=0.00000006，这个0.00000006概率已经很小了，所以链表长度为8时，转换成红黑树
+
 ## 当有哈希冲突时，HashMap是如何查找并确认元素的？
 
 通过昨天分析get方法应该已经比较清楚了，如果哈希冲突，还是找到table[index]的第一个Node，然后一个一个去比对链表中的key，key一致则找到，引用put流程图其中一部分如下图：
@@ -260,9 +262,57 @@ java static class Segment extends ReentrantLock implements Serializable { }
 
 ### JDK1.8的ConcurrentHashMap
 
-![](https://img-blog.csdnimg.cn/20210124114902836.png)
+![](https://img-blog.csdnimg.cn/20210202232133778.png)
 
-ConcurrentHashMap取消了Segment分段锁，采用CAS和synchronized来保证并发安全。数据结构跟HashMap1.8的结构类似，数组+链表/红黑二叉树。Java 8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）
+**Node：**
+
+作为ConcurrentHashMap中最核心、最重要的内部类，Node担负着重要角色：key-value键值对。所有插入ConCurrentHashMap的中数据都将会包装在Node中。定义如下：
+
+在Node内部类中，其属性value、next都是带有volatile的。同时其对value的setter方法进行了特殊处理，不允许直接调用其setter方法来修改value的值。最后Node还提供了find方法来赋值map.get()。
+
+**TreeNode：**
+
+在 HashMap 中，其核心的数据结构是链表。而在 ConcurrentHashMap 中，如果链表的数据过长会转换为红黑树来处理。通过将链表的节点包装成 TreeNode 放在 TreeBin 中，然后经由 TreeBin 完成红黑树的转换。
+
+**Tree：**
+
+TreeBin 不负责键值对的包装，用于在链表转换为红黑树时包装 TreeNode 节点，用来构建红黑树。
+
+转换红黑树的源码：
+
+```java
+private final void treeifyBin(Node<K,V>[] tab, int index) {
+    Node<K,V> b; int n, sc;
+    if (tab != null) {
+        //如果table.length<64 就扩大一倍 返回
+        if ((n = tab.length) < MIN_TREEIFY_CAPACITY)
+            tryPresize(n << 1);
+        else if ((b = tabAt(tab, index)) != null && b.hash >= 0) {
+            synchronized (b) {
+                if (tabAt(tab, index) == b) {
+                    TreeNode<K,V> hd = null, tl = null;
+                    //构造了一个TreeBin对象 把所有Node节点包装成TreeNode放进去
+                    for (Node<K,V> e = b; e != null; e = e.next) {
+                        //这里只是利用了TreeNode封装 而没有利用TreeNode的next域和parent域
+                        TreeNode<K,V> p =
+                            new TreeNode<K,V>(e.hash, e.key, e.val,
+                                              null, null);
+                        if ((p.prev = tl) == null)
+                            hd = p;
+                        else
+                            tl.next = p;
+                        tl = p;
+                    }
+                    //在原来index的位置 用TreeBin替换掉原来的Node对象
+                    setTabAt(tab, index, new TreeBin<K,V>(hd));
+                }
+            }
+        }
+    }
+}
+```
+
+ConcurrentHashMap取消了Segment分段锁，采用了 Node数组 + CAS + Synchronized来保证并发安全。数据结构跟HashMap1.8的结构类似，数组+链表/红黑树。Java 8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）
 
 synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，效率又提升N倍。
 
@@ -385,7 +435,7 @@ private void grow(int minCapacity) {
 if (newCapacity - minCapacity < 0)
     newCapacity = minCapacity;
 ```
-    
+
 所以最终数组扩容后的大小为 16。
 
 ## 请你说一说vector和list的区别
